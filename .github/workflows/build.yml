@@ -22,19 +22,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install buildozer cython
 
-    # 【新增步骤】：强制清理旧缓存，强迫 Buildozer 重新检查并下载缺失的 AIDL
+    # 【新增的关键步骤】：删除 .buildozer 缓存目录
+    # 这会强迫系统重新下载所有 Android SDK 组件，解决文件缺失问题
     - name: Clean Buildozer Cache
       run: |
-        # 如果 .buildozer 目录存在，则删除它，确保环境是全新的
+        echo "正在清理旧缓存..."
         rm -rf .buildozer
-        echo "缓存已清理，将重新下载所有组件..."
+        rm -rf bin
+        echo "清理完成！"
 
     - name: Build APK with Buildozer
       run: |
         # 开始打包
         buildozer -v android debug
-        # 注意：第一次运行可能会因为下载 SDK 超时而失败，
-        # 如果失败，请直接点击 "Run workflow" 再试一次，第二次通常就会成功。
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
