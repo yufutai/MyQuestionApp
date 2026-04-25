@@ -11,7 +11,12 @@ package.domain = org.example
 # 主入口文件
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,txt
+source.main = main.py
 
+# 必须包含的库：kivy 是界面库
+requirements = python3,kivy
+android.api = 31
+android.ndk = 25.1.8937393
 # 版本号
 version = 1.0
 
