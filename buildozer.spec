@@ -1,41 +1,32 @@
 [app]
-# 应用名称
-title = 题库悬浮搜
+# 应用名称（手机上显示的名字）
+title = 题库搜索神器
 
-# 包名 (反向域名)
-package.name = floatingsearch
-
-# 包域名
+# 包名（必须全小写，不能有特殊符号）
+package.name = myquestionapp
 package.domain = org.example
 
-# 主入口文件
+# 核心配置：入口文件是 main.py
 source.dir = .
-source.include_exts = py,png,jpg,kv,atlas,txt
 source.main = main.py
 
-# 必须包含的库：kivy 是界面库
+# 必须包含的库
 requirements = python3,kivy
-android.api = 31
+
+# 【关键修复】指定 NDK 版本，防止自动下载出错
 android.ndk = 25.1.8937393
-# 版本号
-version = 1.0
+# 指定 Android API 版本
+android.api = 31
+android.minapi = 21
 
-# 最低要求的 Python 版本
-requirements = python3,kivy==2.3.0
+# 权限设置（悬浮窗、存储、网络）
+android.permissions = SYSTEM_ALERT_WINDOW, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET
 
-# --- 安卓权限 (关键) ---
-# READ/WRITE: 读取题目.txt
-# SYSTEM_ALERT_WINDOW: 悬浮窗权限
-android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, SYSTEM_ALERT_WINDOW
+# 版本信息
+version = 1.0.2
 
-# --- 图标 (可选) ---
-# icon.filename = %(source.dir)s/data/icon.png
+# 架构设置（arm64-v8a 是目前主流手机架构）
+android.arch = arm64-v8a
 
-[buildozer]
-# 打包目录
-bin_dir = 
-build_dir = 
-base_dir = 
-
-# 虚拟机配置
-vm_arch = arm64-v8a
+# 启动图标（如果没有 icon.png 文件，请注释掉下面这行，或者上传一个名为 icon.png 的图片）
+# icon.filename = %(source.dir)s/icon.png
