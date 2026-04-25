@@ -3,35 +3,39 @@ name: Build Android APK
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch: # 允许手动点击按钮触发
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. 获取你的代码
     - uses: actions/checkout@v3
 
-    # 2. 安装 Python 环境
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.8'
 
-    # 3. 安装打包工具 (Buildozer)
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install buildozer cython
 
-    # 4. 执行打包命令
+    # 【新增步骤】：强制清理旧缓存，强迫 Buildozer 重新检查并下载缺失的 AIDL
+    - name: Clean Buildozer Cache
+      run: |
+        # 如果 .buildozer 目录存在，则删除它，确保环境是全新的
+        rm -rf .buildozer
+        echo "缓存已清理，将重新下载所有组件..."
+
     - name: Build APK with Buildozer
       run: |
-        # 这里的 -v 是显示详细过程，debug 是打包调试版
+        # 开始打包
         buildozer -v android debug
+        # 注意：第一次运行可能会因为下载 SDK 超时而失败，
+        # 如果失败，请直接点击 "Run workflow" 再试一次，第二次通常就会成功。
 
-    # 5. 上传打包好的 APK 文件 (这里已修复为 v4 版本)
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
