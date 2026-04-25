@@ -26,7 +26,7 @@ android.permissions = SYSTEM_ALERT_WINDOW, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL
 version = 1.0.2
 
 # 架构设置（arm64-v8a 是目前主流手机架构）
-android.arch = arm64-v8a
+android.archs = arm64-v8a, armeabi-v7a
 
 # 启动图标（如果没有 icon.png 文件，请注释掉下面这行，或者上传一个名为 icon.png 的图片）
 # icon.filename = %(source.dir)s/icon.png
